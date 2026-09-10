@@ -60,7 +60,7 @@ void hostapd_event_wrapper(void *ctx, enum wpa_event_type event, union wpa_event
 				char *frame = os_zalloc(data->tx_status.data_len);
 
 				if (!frame) {
-					wpa_printf(MSG_ERROR, "%s:%d Failed to alloc %d bytes\n", __func__,
+					wpa_printf(MSG_ERROR, "%s:%d Failed to alloc %zu bytes\n", __func__,
 								__LINE__, data->tx_status.data_len);
 					os_free(msg.data);
 					return;
@@ -78,7 +78,7 @@ void hostapd_event_wrapper(void *ctx, enum wpa_event_type event, union wpa_event
 				char *frame = os_zalloc(data->rx_mgmt.frame_len);
 
 				if (!frame) {
-					wpa_printf(MSG_ERROR, "%s:%d Failed to alloc %d bytes\n",
+					wpa_printf(MSG_ERROR, "%s:%d Failed to alloc %zu bytes\n",
 						__func__, __LINE__, data->rx_mgmt.frame_len);
 					os_free(msg.data);
 					return;
@@ -117,7 +117,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!ies) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc ies %d bytes\n",
+					  "%s:%d event %u Failed to alloc ies %zu bytes\n",
 					  __func__, __LINE__, event, data->auth.ies_len);
 					os_free(msg.data);
 					return;
@@ -134,7 +134,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!frame) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc frame %d bytes\n",
+					  "%s:%d event %u Failed to alloc frame %zu bytes\n",
 					  __func__, __LINE__, event, data->rx_mgmt.frame_len);
 					os_free(msg.data);
 					return;
@@ -152,7 +152,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!frame) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc frame %d bytes\n",
+					  "%s:%d event %u Failed to alloc frame %zu bytes\n",
 					  __func__, __LINE__, event, data->tx_status.data_len);
 					os_free(msg.data);
 					return;
@@ -183,7 +183,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!req_ies) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc req_ies %d bytes\n",
+					  "%s:%d event %u Failed to alloc req_ies %zu bytes\n",
 					  __func__, __LINE__, event, data->assoc_info.req_ies_len);
 					os_free(msg.data);
 					os_free(addr);
@@ -199,7 +199,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!resp_ies) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc resp_ies %d bytes\n",
+					  "%s:%d event %u Failed to alloc resp_ies %zu bytes\n",
 					  __func__, __LINE__, event, data->assoc_info.resp_ies_len);
 					os_free(msg.data);
 					os_free(addr);
@@ -217,7 +217,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!resp_frame) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc resp_frame %d bytes\n",
+					  "%s:%d event %u Failed to alloc resp_frame %zu bytes\n",
 					  __func__, __LINE__, event, data->assoc_info.resp_frame_len);
 					os_free(msg.data);
 					os_free(addr);
@@ -252,7 +252,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!resp_ies) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc resp_ies %d bytes\n",
+					  "%s:%d event %u Failed to alloc resp_ies %zu bytes\n",
 					  __func__, __LINE__,  event, data->assoc_reject.resp_ies_len);
 					os_free(msg.data);
 					os_free(bssid);
@@ -282,7 +282,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!ie) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc ie %d bytes\n",
+					  "%s:%d event %u Failed to alloc ie %zu bytes\n",
 					  __func__, __LINE__,  event, data->deauth_info.ie_len);
 					os_free(msg.data);
 					os_free(sa);
@@ -311,7 +311,7 @@ void wpa_supplicant_event_wrapper(void *ctx,
 
 				if (!ie) {
 					wpa_printf(MSG_ERROR,
-					  "%s:%d event %u Failed to alloc ie %d bytes\n",
+					  "%s:%d event %u Failed to alloc ie %zu bytes\n",
 					  __func__, __LINE__,  event, data->disassoc_info.ie_len);
 					os_free(msg.data);
 					os_free(sa);
@@ -529,7 +529,7 @@ void wpa_drv_zep_event_proc_scan_res(struct zep_drv_if_ctx *if_ctx,
 
 	struct wpa_scan_res *sr = os_zalloc(scan_res_len);
 	if (!sr) {
-		wpa_printf(MSG_ERROR, "%s: Failed to alloc scan results(%d bytes)", __func__, scan_res_len);
+		wpa_printf(MSG_ERROR, "%s: Failed to alloc scan results(%zu bytes)", __func__, scan_res_len);
 		if_ctx->scan_res2->res = tmp;
 		goto err;
 	}
@@ -2127,7 +2127,7 @@ static int _wpa_drv_zep_set_key(void *priv,
 	}
 
 	wpa_printf(MSG_DEBUG, "%s: priv:%p alg %d addr %p key_idx %d set_tx %d seq %p "
-		   "seq_len %d key %p key_len %d key_flag %x",
+		   "seq_len %zu key %p key_len %zu key_flag %x",
 		   __func__,
 		   if_ctx->dev_priv,
 		   alg, addr,
@@ -2229,7 +2229,7 @@ static int wpa_drv_zep_get_ssid(void *priv,
 	if_ctx = priv;
 
 	wpa_printf(MSG_DEBUG,
-		   "%s: SSID size: %d",
+		   "%s: SSID size: %zu",
 		   __func__,
 		   if_ctx->ssid_len);
 
@@ -2759,6 +2759,7 @@ out:
 	if (if_ctx) {
 		if_ctx->beacon_set = false;
 		if_ctx->ap_probe_req_listen = false;
+		if_ctx->probe_req_set = false;
 	}
 	return ret;
 }
@@ -2790,10 +2791,10 @@ int wpa_drv_zep_deinit_ap(void *priv)
 		goto out;
 	}
 	if_ctx->ap_probe_req_listen = false;
-
 out:
 	if (if_ctx) {
 		if_ctx->beacon_set = false;
+		if_ctx->probe_req_set = false;
 	}
 	return ret;
 }
@@ -3000,9 +3001,7 @@ out:
 int wpa_drv_hapd_send_eapol(void *priv, const u8 *addr, const u8 *data, size_t data_len,
                             int encrypt, const u8 *own_addr, u32 flags, int link_id)
 {
-#ifdef CONFIG_WIFI_NM_HOSTAPD_AP
 	struct zep_drv_if_ctx *if_ctx = priv;
-	struct hostapd_data *hapd     = NULL;
 	int ret                       = -1;
 
 	/* TODO: Unused for now, but might need for rekeying */
@@ -3012,47 +3011,36 @@ int wpa_drv_hapd_send_eapol(void *priv, const u8 *addr, const u8 *data, size_t d
 	/* Unused till Wi-Fi7 MLO is supported in Zephyr */
 	(void)link_id;
 
-	hapd = if_ctx->hapd;
-
-	wpa_printf(MSG_DEBUG, "hostapd: Send EAPOL frame (encrypt=%d)", encrypt);
-
-	ret = l2_packet_send(hapd->l2, addr, ETH_P_EAPOL, data, data_len);
-	if (ret < 0) {
-		wpa_printf(MSG_ERROR, "%s: l2_packet_send failed: %d", __func__, ret);
-		goto out;
-	}
-#else
-	struct zep_drv_if_ctx *if_ctx = priv;
-	const struct zep_wpa_supp_dev_ops *dev_ops;
-	int ret = -1;
-	struct wpa_supplicant *wpa_s = NULL;
-
-	/* TODO: Unused for now, but might need for rekeying */
-	(void)own_addr;
-	(void)flags;
-	(void)encrypt;
-
-	wpa_s = if_ctx->supp_if_ctx;
-	dev_ops = get_dev_ops(if_ctx->dev_ctx);
-	if (!dev_ops) {
-		wpa_printf(MSG_ERROR, "%s: get_dev_ops failed", __func__);
-		goto out;
-	}
-
-	wpa_printf(MSG_DEBUG, "wpa_supp: Send EAPOL frame (encrypt=%d)", encrypt);
-
-	ret = l2_packet_send(wpa_s->l2, addr, ETH_P_EAPOL, data, data_len);
-	if (ret < 0) {
-		wpa_printf(MSG_ERROR, "%s: l2_packet_send failed: %d", __func__, ret);
-		goto out;
-	}
+#ifdef CONFIG_WIFI_NM_HOSTAPD_AP
+	if (if_ctx->hapd != NULL) {
+		struct hostapd_data *hapd = if_ctx->hapd;
+		wpa_printf(MSG_DEBUG, "hostapd: Send EAPOL frame (encrypt=%d)", encrypt);
+		ret = l2_packet_send(hapd->l2, addr, ETH_P_EAPOL, data, data_len);
+		if (ret < 0) {
+			wpa_printf(MSG_ERROR, "%s: l2_packet_send failed: %d", __func__, ret);
+			goto out;
+		}
+	} else
 #endif
+	{
+		/* wpa_supplicant path: STA or P2P GO */
+		struct wpa_supplicant *wpa_s = if_ctx->supp_if_ctx;
+		if (wpa_s == NULL) {
+			wpa_printf(MSG_ERROR, "%s: wpa_s is NULL", __func__);
+			goto out;
+		}
+		wpa_printf(MSG_DEBUG, "wpa_supp: Send EAPOL frame (encrypt=%d)", encrypt);
+		ret = l2_packet_send(wpa_s->l2, addr, ETH_P_EAPOL, data, data_len);
+		if (ret < 0) {
+			wpa_printf(MSG_ERROR, "%s: l2_packet_send failed: %d", __func__, ret);
+			goto out;
+		}
+	}
 
 	ret = 0;
 out:
 	return ret;
 }
-
 
 int wpa_drv_zep_get_inact_sec(void *priv, const u8 *addr)
 {
