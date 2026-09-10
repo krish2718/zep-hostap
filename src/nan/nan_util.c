@@ -1639,9 +1639,9 @@ int nan_peer_dump_sched_to_buf(struct nan_peer_schedule *sched,
 
 			ret = wpa_scnprintf(pos, end - pos,
 					    "\t\tbitmap: period=%u duration=%u offset=%u ",
-					    BIT(6 + chan->tbm.period),
-					    BIT(4 + chan->tbm.duration),
-					    16 * chan->tbm.offset);
+					    (unsigned int) BIT(6 + chan->tbm.period),
+					    (unsigned int) BIT(4 + chan->tbm.duration),
+					    (unsigned int) (16 * chan->tbm.offset));
 			if (os_snprintf_error(end - pos, ret))
 				goto err;
 			pos += ret;
@@ -1665,9 +1665,9 @@ int nan_peer_dump_sched_to_buf(struct nan_peer_schedule *sched,
 
 		ret = wpa_scnprintf(pos, end - pos,
 				    "\tndc: period=%u duration=%u offset=%u bitmap=",
-				    BIT(6 + map->ndc.period),
-				    BIT(4 + map->ndc.duration),
-				    16 * map->ndc.offset);
+				    (unsigned int) BIT(6 + map->ndc.period),
+				    (unsigned int) BIT(4 + map->ndc.duration),
+				    (unsigned int) (16 * map->ndc.offset));
 		if (os_snprintf_error(end - pos, ret))
 			goto err;
 		pos += ret;
