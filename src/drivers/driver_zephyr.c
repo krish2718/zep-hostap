@@ -1434,7 +1434,8 @@ static void wpa_drv_zep_global_deinit(void *priv)
  */
 static void *wpa_drv_zep_init(void *ctx,
 			      const char *ifname,
-			      void *global_priv)
+			      void *global_priv,
+			      enum wpa_p2p_mode p2p_mode)
 {
 	struct zep_drv_if_ctx *if_ctx = NULL;
 	const struct zep_wpa_supp_dev_ops *dev_ops;
@@ -2372,7 +2373,7 @@ static int wpa_drv_zep_send_action(void *priv, unsigned int freq,
 		const u8 *dst, const u8 *src,
 		const u8 *bssid,
 		const u8 *data, size_t data_len,
-		int no_cck)
+		int no_cck, int link_id)
 {
 	struct zep_drv_if_ctx *if_ctx = NULL;
 	const struct zep_wpa_supp_dev_ops *dev_ops;
@@ -2894,7 +2895,8 @@ out:
 	return ret;
 }
 
-int wpa_drv_zep_sta_disassoc(void *priv, const u8 *own_addr, const u8 *addr, u16 reason_code)
+int wpa_drv_zep_sta_disassoc(void *priv, const u8 *own_addr, const u8 *addr,
+			     u16 reason_code, int link_id)
 {
 	struct zep_drv_if_ctx *if_ctx = priv;
 	const struct zep_wpa_supp_dev_ops *dev_ops;
@@ -3111,7 +3113,8 @@ out:
 }
 
 int wpa_drv_zep_remain_on_channel(void *priv, unsigned int freq,
-				  unsigned int duration)
+				  unsigned int duration,
+				  const u8 *filter_addr)
 {
 	struct zep_drv_if_ctx *if_ctx = NULL;
 	const struct zep_wpa_supp_dev_ops *dev_ops = NULL;
