@@ -313,6 +313,10 @@ OBJS += src/nan/nan_bootstrap.c
 ifdef CONFIG_PASN
 OBJS += src/nan/nan_pairing.c
 endif
+ifneq ($(CONFIG_TLS), openssl)
+OBJS += src/crypto/sha256-pbkdf2.c
+OBJS += src/crypto/sha384-pbkdf2.c
+endif
 endif
 
 ifdef CONFIG_OWE
