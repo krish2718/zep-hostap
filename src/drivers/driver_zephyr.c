@@ -1341,7 +1341,8 @@ wpa_driver_wpa_supp_postprocess_modes(struct hostapd_hw_modes *modes,
 
 struct hostapd_hw_modes *wpa_drv_zep_get_hw_feature_data(void *priv,
 		u16 *num_modes,
-		u16 *flags, u8 *dfs_domain)
+		u16 *flags, u8 *dfs_domain,
+		char *alpha2, size_t alpha2_len)
 {
 	struct zep_drv_if_ctx *if_ctx = NULL;
 	const struct zep_wpa_supp_dev_ops *dev_ops;
@@ -1349,6 +1350,9 @@ struct hostapd_hw_modes *wpa_drv_zep_get_hw_feature_data(void *priv,
 	int ret = -1;
 
 	if_ctx = priv;
+
+	if (alpha2 && alpha2_len)
+		alpha2[0] = '\0';
 
 	dev_ops = get_dev_ops(if_ctx->dev_ctx);
 	if (!dev_ops || !dev_ops->get_wiphy) {
